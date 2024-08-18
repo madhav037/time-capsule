@@ -1,8 +1,9 @@
-export const emailModel = {
+export const letterModel = {
     "userID" : null,
     "email" : null,
     "body" : null,
     "dateWritten" : new Date(),
     "dateToRecieve" : null,
-    "visibility" : false
+    "visibility" : false,
+    "sent" : false
 }

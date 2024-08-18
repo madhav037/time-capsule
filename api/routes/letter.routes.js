@@ -6,5 +6,6 @@ const router = Router()
 
 router.post('/add',addLetter)
 router.get('/getall',viewPublicLetters)
+// router.get('/test/add-to-cache', addLettersToCache)
 
 export default router
