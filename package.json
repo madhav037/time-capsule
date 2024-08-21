@@ -18,6 +18,7 @@
     "express": "^4.19.2",
     "ioredis": "^5.4.1",
     "node-cron": "^3.0.3",
+    "node-mailjet": "^6.0.5",
     "node-redis": "^0.1.7",
     "nodemailer": "^6.9.14",
     "redis": "^4.7.0"

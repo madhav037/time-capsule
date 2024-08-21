@@ -79,7 +79,9 @@ client.on("error", (err) => {
     console.error("Failed to connect to Redis:", err);
   }
 
-  getLetterThisMonth(8);
+  // getLetterThisMonth(8);
+  // await sendLetter();
+
 })();
 
 cron.schedule("0 0 1 * *", async () => {
