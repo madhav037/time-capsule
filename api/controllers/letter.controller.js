@@ -5,15 +5,17 @@ import { getTodaysDate } from "../utils/getTodayDate.js";
 export const addLetter = async (req, res, next) => {
   const { body, dateWritten, dateToRecieve, visibility, email, userID } =
     req.body;
+    
   const letterData = {
     body: body,
     dateWritten: dateWritten,
     dateToRecieve: dateToRecieve,
     visibility: visibility,
     email: email,
-    userID: userID === undefined ? null : userID,
+    userID: userID == "null" ? null : userID,
     sent: false,
   };
+  
   try {
     const { error: addLetterError } = await supabase
       .from("letter")
@@ -24,6 +26,8 @@ export const addLetter = async (req, res, next) => {
   } catch (err) {
     if (err.code == 23505) {
       res.send("ERROR-addLetter : email alreay exists");
+    }else{
+      console.log("ERROR-addLetter", err);
     }
   }
 };
@@ -51,5 +55,4 @@ export const viewPublicLetters = async (req, res) => {
     console.log("ERROR-viewPublicLetters", err);
   }
 };
-
 

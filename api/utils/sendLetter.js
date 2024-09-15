@@ -44,5 +44,14 @@ export const sendLetter = async () => {
       .catch((err) => {
         console.log(err.statusCode);
       });
+
+    const { error: updateLetterError } = await supabase
+      .from("letter")
+      .update({ sent: true })
+      .eq("id", data.id);
+
+    if (updateLetterError) {
+      console.log("ERROR-updateLetter", updateLetterError);
+    }
   });
 };

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Menu from "../Components/Menu";
 
 function ViewLetter() {
   const location = useLocation();
+  const nav = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const gradients = [
     "from-green-400 via-blue-500 to-purple-600",
@@ -20,6 +21,39 @@ function ViewLetter() {
     }, 5000); // Change every 5 seconds
     return () => clearInterval(interval);
   }, [gradients.length]);
+
+  const handleSubmit = async() => {
+    console.log("submitting letter");
+    const response = await fetch("http://localhost:5000/api/letters/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        body: queryParams.get("body"),
+        dateWritten: queryParams.get("dateWritten"),
+        dateToRecieve: queryParams.get("dateToRecieve"),
+        email: queryParams.get("email"),
+        visibility : queryParams.get("visibility"),
+        userID : queryParams.get("userID") ? queryParams.get("userID") : "null"
+      })
+    })
+    .then((res) => res.json())
+    .catch((err) => console.error(err))
+    const data = response;
+    console.log("data",data); 
+    if (data) {
+      alert("Letter submitted successfully");
+    } else {
+      alert("Failed to submit letter");
+    }
+    if (queryParams.get('userID')){
+      nav(`/${queryParams.get('userID')}`);
+    }else{
+      nav("/");
+    }
+  }
+
   return (
     <>
       <div className="bg-[#C8CFA0] h-screen">
@@ -49,7 +83,7 @@ function ViewLetter() {
           >
             {queryParams.get("body")}
           </textarea>
-          <button className="bg-red-500 w-1/2 h-1/2 m-5 rounded-xl text-5xl font-extrabold shadow-2xl">
+          <button className="bg-red-500 w-1/2 h-1/2 m-5 rounded-xl text-5xl font-extrabold shadow-2xl" onClick={() => handleSubmit()}>
             SUBMIT<br/>
             YOUR<br/>
             LETTER
