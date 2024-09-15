@@ -1,8 +1,8 @@
 import { client } from "../index.js";
 
-export const addLettersToCache = async (data) => {
+export const addLettersToCache = async (data,name) => {
   try {
-    const cachedData = await client.get("letters");
+    const cachedData = await client.get(name);
     const month = await client.get("currentCacheMonth");
     const lastDate = new Date(
       new Date().getFullYear(),

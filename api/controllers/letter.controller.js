@@ -30,11 +30,21 @@ export const addLetter = async (req, res, next) => {
 
 export const viewPublicLetters = async (req, res) => {
   try {
+    let publicCacheLetters = await client.get("publicLetters");
+    if (publicCacheLetters) {
+      res.send(JSON.parse(publicCacheLetters));
+      return;
+    }
+
     const { data, error } = await supabase
       .from("letter")
       .select()
       .eq("visibility", "false");
 
+    if (data) {
+      await client.set("publicLetters", JSON.stringify(data));
+      await client.expire("publicLetters", 2592000);
+    }
     if (error) throw error;
     res.send(data);
   } catch (err) {

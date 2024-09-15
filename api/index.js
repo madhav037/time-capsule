@@ -11,6 +11,7 @@ import Redis from "ioredis";
 import cron from "node-cron";
 import { getLetterThisMonth } from "./utils/getDataFromServerEachMonth.js";
 import { sendLetter } from "./utils/sendLetter.js";
+import cors from "cors";
 dotenv.config();
 
 export const supabase = createSupabaseClient(
@@ -20,6 +21,7 @@ export const supabase = createSupabaseClient(
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // export const client = createClient({
 //   password: process.env.REDISPASSWORD,
