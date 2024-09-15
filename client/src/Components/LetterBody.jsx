@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 function LetterBody() {
   const dt = new Date();
   const [customDateToRecieve, setcustomDateToRecieve] = useState({
-    year: "",
-    month: "",
-    date: "",
+    year: dt.getFullYear(),
+    month: dt.getMonth()+1,
+    date: dt.getDate(),
   });
   const [formData, setFormData] = useState({
     body: "",
@@ -63,38 +63,66 @@ function LetterBody() {
   let dates = [];
   let years = [];
   // let dt = new Date();
+  // const months_comp = months.map((month, index) => {
+  //   return (
+  //     <option
+  //       className="text-black"
+  //       value={index + 1}
+  //       selected={index === dt.getMonth() ? true : false}
+  //     >
+  //       {month}
+  //     </option>
+  //   );
+  // });
   const months_comp = months.map((month, index) => {
     return (
-      <option
-        className="text-black"
-        value={index + 1}
-        selected={index === dt.getMonth() ? true : false}
-      >
+      <option key={index} className="text-black" value={index + 1}>
         {month}
       </option>
     );
   });
+
+  // for (let i = 1; i <= 31; i++) {
+  //   dates.push(i.toString());
+  // }
+  // const dates_comp = dates.map((date) => {
+  //   return (
+  //     <option
+  //       className="text-black"
+  //       value={date}
+  //       selected={dt.getDate() === date ? true : false}
+  //     >
+  //       {date}
+  //     </option>
+  //   );
+  // });
   for (let i = 1; i <= 31; i++) {
     dates.push(i.toString());
   }
-  const dates_comp = dates.map((date) => {
+  const dates_comp = dates.map((date, index) => {
     return (
-      <option
-        className="text-black"
-        value={date}
-        selected={dt.getDate() === date ? true : false}
-      >
+      <option key={index} className="text-black" value={date}>
         {date}
       </option>
     );
   });
 
+  // for (let i = dt.getFullYear(); i <= dt.getFullYear() + 50; i++) {
+  //   years.push(i);
+  // }
+  // const years_comp = years.map((year) => {
+  //   return (
+  //     <option className="text-black" value={year}>
+  //       {year}
+  //     </option>
+  //   );
+  // });
   for (let i = dt.getFullYear(); i <= dt.getFullYear() + 50; i++) {
-    years.push(i);
+    years.push(i.toString());
   }
-  const years_comp = years.map((year) => {
+  const years_comp = years.map((year, index) => {
     return (
-      <option className="text-black" value={year}>
+      <option key={index} className="text-black" value={year} selected={index==0?true:false}>
         {year}
       </option>
     );
@@ -280,7 +308,7 @@ function LetterBody() {
               </div>
             ) : (
               <div className="grid grid-cols-4 gap-4">
-                <select
+                {/* <select
                   class="text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-400 dark:border-red-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-red-200 dark:focus:border-red-200"
                   onChange={(e) => {
                     setcustomDateToRecieve({
@@ -310,6 +338,44 @@ function LetterBody() {
                       date: e.target.value,
                     });
                   }}
+                >
+                  {dates_comp}
+                </select> */}
+                <select
+                  className="text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-400 dark:border-red-600 dark:text-black"
+                  value={customDateToRecieve.year} // Control the selected year
+                  onChange={(e) =>
+                    setcustomDateToRecieve({
+                      ...customDateToRecieve,
+                      year: e.target.value,
+                    })
+                  }
+                >
+                  {years_comp}
+                </select>
+
+                <select
+                  className="text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-400 dark:border-red-600 dark:text-black"
+                  value={customDateToRecieve.month} // Control the selected month
+                  onChange={(e) =>
+                    setcustomDateToRecieve({
+                      ...customDateToRecieve,
+                      month: e.target.value,
+                    })
+                  }
+                >
+                  {months_comp}
+                </select>
+
+                <select
+                  className="text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-400 dark:border-red-600 dark:text-black"
+                  value={customDateToRecieve.date} // Control the selected date
+                  onChange={(e) =>
+                    setcustomDateToRecieve({
+                      ...customDateToRecieve,
+                      date: e.target.value,
+                    })
+                  }
                 >
                   {dates_comp}
                 </select>
@@ -365,8 +431,9 @@ function LetterBody() {
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3  dark:bg-red-400 dark:border-gray-600 dark:placeholder-black placeholder:font-md dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Please enter an email"
                 onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value }); console.log(e.target.value) }
-                }
+                  setFormData({ ...formData, email: e.target.value });
+                  console.log(e.target.value);
+                }}
               ></input>
             </div>
             <div className="opacity-55 font-medium mt-2">
