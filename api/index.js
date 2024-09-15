@@ -12,6 +12,7 @@ import cron from "node-cron";
 import { getLetterThisMonth } from "./utils/getDataFromServerEachMonth.js";
 import { sendLetter } from "./utils/sendLetter.js";
 import cors from "cors";
+import path from "path";
 dotenv.config();
 
 export const supabase = createSupabaseClient(
@@ -39,6 +40,8 @@ export const client = createClient({
     port: 17169,
   },
 });
+
+const __dirname = path.resolve()
 
 client.on("error", (err) => {
   console.log("Redis Client Error", err)
@@ -101,3 +104,9 @@ cron.schedule("0 0 1 * *", async () => {
 cron.schedule("0 0 * * *", async () => {
   await sendLetter();
 });
+
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+})
