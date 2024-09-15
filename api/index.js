@@ -1,6 +1,7 @@
 import express from "express";
 import letterHandler from "./routes/letter.routes.js";
 import AdminHandler from "./routes/admin.routes.js";
+import AuthHandler from "./routes/auth.routes.js";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import { getTodaysDate } from "./utils/getTodayDate.js";
@@ -76,6 +77,7 @@ client.on("error", (err) => {
 
     app.use("/api/letters", letterHandler);
     app.use("/api/admin", AdminHandler);
+    app.use('/api/auth',AuthHandler);
 
     app.listen(5000, () => {
       console.log("Server listening on port : 5000");

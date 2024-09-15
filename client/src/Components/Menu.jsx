@@ -21,12 +21,12 @@ function Menu() {
           <Link to={'/letters/public'} className="hover:text-red-200 border border-b-4 border-red-300 p-2 cursor-pointer mx-5 hover:bg-red-400 hover:border-red-400 rounded-lg">
             Read Public Letters
           </Link>
-          <button className="hover:text-red-200 border border-b-4 border-red-300 p-2 cursor-pointer mx-5 hover:bg-red-400 hover:border-red-400 rounded-lg">
+          <Link to={'/signup'} className="hover:text-red-200 border border-b-4 border-red-300 p-2 cursor-pointer mx-5 hover:bg-red-400 hover:border-red-400 rounded-lg">
             SignUp
-          </button>
-          <button className="hover:text-red-200 border border-b-4 border-red-300 p-2 cursor-pointer mx-5 hover:bg-red-400 hover:border-red-400 rounded-lg">
+          </Link>
+          <Link to={'/login'} className="hover:text-red-200 border border-b-4 border-red-300 p-2 cursor-pointer mx-5 hover:bg-red-400 hover:border-red-400 rounded-lg">
             SignIn
-          </button>
+          </Link>
         </div>
       </div>
     </>
