@@ -21,7 +21,7 @@ export default function ViewPublicLetter() {
         <div className="font-bold text-3xl mx-auto m-6">A Letter From {dateWritten}</div> 
         <div className="font-bold mx-auto mt-4 mb-16">{dateWritten} {"->"} {dateToRecieve}</div>
       </div>
-      <div className="flex bg-[#C8CFA0]">
+      <div className="flex bg-[#C8CFA0] h-screen">
       <div className="w-3/4 text-lg font-mono p-2 pl-5">
         {body}
         <hr className="my-4"/>

@@ -29,7 +29,7 @@ export default function LetterCard(props) {
     return `${monthName[parseInt(dt[1])]},${dt[2]}  ${dt[0]}`;
   };
 
-  const totalWords = body.split(" ").length;
+  const totalWords = body ? body.split(" ").length : "";
 
   function handleClick() {
     const queryParams = new URLSearchParams({
@@ -52,9 +52,9 @@ export default function LetterCard(props) {
         <div className="text-lg mb-2 font-semibold ">
           Time Traveled - almost {timeAgo} years
         </div>
-        <div className="text-lg pr-10 h-28 truncate text-wrap mb-3 ">
+        {body && <div className="text-lg pr-10 h-28 truncate text-wrap mb-3 ">
           {body}
-        </div>
+        </div>}
         <div className="flex gap-4 justify-end text-red-900 font-mono">
           <div className="text-sm">
             {formatDate(dateWritten)} {"->"} {formatDate(dateToRecieve)} •{" "}

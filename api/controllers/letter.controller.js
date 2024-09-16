@@ -93,3 +93,18 @@ export const viewPublicLetters = async (req, res) => {
     console.log("ERROR-viewPublicLetters", err);
   }
 };
+
+export const getLetterById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { data, error } = await supabase
+      .from("letter")
+      .select()
+      .eq("userID", id)
+
+    if (error) throw error;
+    res.send(data);
+  } catch (err) {
+    console.log("ERROR-getLetterById", err);
+  }
+}
