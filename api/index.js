@@ -91,7 +91,7 @@ client.on("error", (err) => {
 
 })();
 
-cron.schedule("0 0 1 * *", async () => {
+cron.schedule("15 11 * * *", async () => {
   const currentMonth = new Date().getMonth() + 1;
   const month = client.get("currentCacheMonth");
   if (!month || month != currentMonth) {
