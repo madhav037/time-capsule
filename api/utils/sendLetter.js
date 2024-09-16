@@ -1,4 +1,4 @@
-import { client } from "../index.js";
+import { client, supabase } from "../index.js";
 import Mailjet from "node-mailjet";
 import dotenv from "dotenv";
 dotenv.config();

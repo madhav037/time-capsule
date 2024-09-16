@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const nav = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    const data = response;
+    console.log("data", data);
+    if (data) {
+      alert("User logged in successfully");
+      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("user-in", "true");
+      nav(`/dashboard/${data.data.id}`);
+    } else {
+      alert("Failed to login");
+    }
     console.log({ email, password });
   };
 
@@ -36,6 +59,11 @@ function Login() {
             Login
           </button>
         </form>
+        <div>
+          <p className="mt-4 text-center">
+            <Link className="text-slate-700 underline" to={'/signup'}>Don't have an account? </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

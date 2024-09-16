@@ -41,6 +41,8 @@ function ViewLetter() {
     .then((res) => res.json())
     .catch((err) => console.error(err))
     const data = response;
+
+
     console.log("data",data); 
     if (data) {
       alert("Letter submitted successfully");
@@ -48,7 +50,7 @@ function ViewLetter() {
       alert("Failed to submit letter");
     }
     if (queryParams.get('userID')){
-      nav(`/${queryParams.get('userID')}`);
+      nav(`/dashboard/${queryParams.get('userID')}`);
     }else{
       nav("/");
     }

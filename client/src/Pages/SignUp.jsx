@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const nav = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ function SignUp() {
     console.log("data", data);
     if (data) {
       alert("User created successfully");
+      nav(`/login`);
     } else {
       alert("Failed to create user");
     }
@@ -39,7 +42,7 @@ function SignUp() {
             type="text"
             placeholder="username"
             className="w-full p-3 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-red-300 dark:border-red-600 dark:text-black"
-            value={email}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
@@ -70,6 +73,9 @@ function SignUp() {
             Sign Up
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <Link className="text-slate-700 underline" to={'/login'}>Already have an account?{" "}</Link>
+        </div>
       </div>
     </div>
   );

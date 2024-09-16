@@ -8,6 +8,7 @@ import { DataProvider } from "./Utils/DataContext";
 import ViewPublicLetter from "./Pages/ViewPublicLetter";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/public-letter" Component={ViewPublicLetter} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/login" Component={Login} />
+          <Route path="/dashboard/:id" Component={Dashboard} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>

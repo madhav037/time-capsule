@@ -91,19 +91,24 @@ client.on("error", (err) => {
 
 })();
 
-cron.schedule("15 11 * * *", async () => {
+cron.schedule("0 0 1 * *", async () => {
+  
   const currentMonth = new Date().getMonth() + 1;
   const month = client.get("currentCacheMonth");
   if (!month || month != currentMonth) {
     client.set("currentCacheMonth", currentMonth);
   }
   try {
-    getLetterThisMonth(currentMonth);
+    await getLetterThisMonth(currentMonth);
+    console.log("After month");
   } catch (error) {
     console.error("Error-index-cron :", error);
   }
 });
+
 cron.schedule("0 0 * * *", async () => {
+  console.log("running cron");
+  
   await sendLetter();
 });
 

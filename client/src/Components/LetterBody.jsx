@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addMonths, addYears } from 'date-fns';
+import formateDate from "../Utils/formatDate";
 
 function LetterBody() {
   const dt = new Date();
@@ -8,13 +10,15 @@ function LetterBody() {
     month: dt.getMonth()+1,
     date: dt.getDate(),
   });
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userIn = localStorage.getItem("user-in");
   const [formData, setFormData] = useState({
     body: "",
-    dateWritten: `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`,
+    dateWritten: formateDate(dt.getDate(),dt.getMonth() + 1,dt.getFullYear()) ,//`${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`
     dateToRecieve: "",
     visibility: "",
-    email: "",
-    userID: null,
+    email: userIn == "true" ? user.data.email : "",
+    userID: userIn == "true" ? user.data.id : null,
   });
   const [timePeriod, setTimePeriod] = useState(true);
   const [selected_Duration, setSelected_Duration] = useState({
@@ -136,7 +140,8 @@ function LetterBody() {
     }
     if (formData.dateToRecieve === "") {
       if (!timePeriod) {
-        formData.dateToRecieve = `${customDateToRecieve.year}-${customDateToRecieve.month}-${customDateToRecieve.date}`;
+        formData.dateToRecieve = formateDate(customDateToRecieve.date,customDateToRecieve.month,customDateToRecieve.year) 
+        //`${customDateToRecieve.year}-${customDateToRecieve.month}-${customDateToRecieve.date}`;
       } else {
         alert("Please select a date to recieve the letter");
         return;
@@ -198,11 +203,12 @@ function LetterBody() {
                       4: false,
                       5: false,
                     });
+                    let addedDate=addMonths(dt, 6);
                     setFormData({
                       ...formData,
-                      dateToRecieve: `${dt.getFullYear()}-${
-                        dt.getMonth() + 7
-                      }-${dt.getDate()}`,
+                      dateToRecieve: `${addedDate.getFullYear()}-${
+                        addedDate.getMonth() + 1
+                      }-${addedDate.getDate()}`,
                     });
                   }}
                 />
@@ -222,12 +228,12 @@ function LetterBody() {
                       4: false,
                       5: false,
                     });
-
+                    let addedDate=addYears(dt, 1);
                     setFormData({
                       ...formData,
-                      dateToRecieve: `${dt.getFullYear()}-${
-                        dt.getMonth() + 13
-                      }-${dt.getDate()}`,
+                      dateToRecieve: `${addedDate.getFullYear()}-${
+                        addedDate.getMonth() + 1
+                      }-${addedDate.getDate()}`,
                     });
                   }}
                 />
@@ -271,12 +277,12 @@ function LetterBody() {
                       4: true,
                       5: false,
                     });
-
+                    const addedDate=addYears(dt, 5);
                     setFormData({
                       ...formData,
-                      dateToRecieve: `${dt.getFullYear() + 5}-${
-                        dt.getMonth() + 1
-                      }-${dt.getDate()}`,
+                      dateToRecieve: `${addedDate.getFullYear()}-${
+                        addedDate.getMonth() + 1
+                      }-${addedDate.getDate()}`,
                     });
                   }}
                 />
@@ -296,12 +302,12 @@ function LetterBody() {
                       4: false,
                       5: true,
                     });
-
+                    const addedDate=addYears(dt, 10);
                     setFormData({
                       ...formData,
-                      dateToRecieve: `${dt.getFullYear() + 10}-${
-                        dt.getMonth() + 1
-                      }-${dt.getDate()}`,
+                      dateToRecieve: `${addedDate.getFullYear()}-${
+                        addedDate.getMonth() + 1
+                      }-${addedDate.getDate()}`,
                     });
                   }}
                 />
@@ -430,6 +436,7 @@ function LetterBody() {
                 type="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3  dark:bg-red-400 dark:border-gray-600 dark:placeholder-black placeholder:font-md dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Please enter an email"
+                value={formData.email}
                 onChange={(e) => {
                   setFormData({ ...formData, email: e.target.value });
                   console.log(e.target.value);

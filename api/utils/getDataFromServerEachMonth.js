@@ -17,6 +17,8 @@ export const getLetterThisMonth = async (currentMonth) => {
       .filter('dateToRecieve', 'gte', `${formattedFirstDate}`)
       .filter('dateToRecieve', 'lt', `${formattedLastDate}`);
 
+    console.log(data)
+
     if (data) {
       await addLettersToCache(data,"letters");
     } else {
