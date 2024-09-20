@@ -5,14 +5,16 @@ import { getTodaysDate } from "../utils/getTodayDate.js";
 export const addLetter = async (req, res, next) => {
   const { body, dateWritten, dateToRecieve, visibility, email, userID } =
     req.body;
-
+    const processedUserID = userID === "null" || userID === null ? null : userID;
+    console.log("processedUserID", processedUserID, typeof(processedUserID));
+    
   const letterData = {
     body: body,
     dateWritten: dateWritten,
     dateToRecieve: dateToRecieve,
     visibility: visibility,
     email: email,
-    userID: userID === "null" ? null : userID,
+    userID: processedUserID,
     sent: false,
   };
 
@@ -29,7 +31,7 @@ export const addLetter = async (req, res, next) => {
     }
 
     // Check if userID is provided
-    if (userID) {
+    if (processedUserID) {
       console.log(insertedLetter);
       
       // Fetch the current letter IDs for the user
@@ -65,7 +67,7 @@ export const addLetter = async (req, res, next) => {
     if (err.code === "23505") {
       res.status(400).send("ERROR-addLetter: Email already exists");
     } else {
-      res.status(500).send("An error occurred",err);
+      res.status(500).send("An error occurred");
     }
   }
 };

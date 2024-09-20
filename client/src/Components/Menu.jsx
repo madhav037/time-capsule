@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Menu() {
   const user = JSON.parse(localStorage.getItem("user"));
   const userIn = localStorage.getItem("user-in");
+  const nav = useNavigate();
   return (
     <>
       <div className="p-4 bg-[#C8CFA0] grid grid-cols-2 content-center ">
@@ -75,6 +76,7 @@ function Menu() {
                   .catch((err) => console.error(err));
                 const data = response;
                 console.log("data", data);
+                nav("/");
                 window.location.reload();
               }}>Log out</button>
               <Link

@@ -24,7 +24,7 @@ function ViewLetter() {
 
   const handleSubmit = async() => {
     console.log("submitting letter");
-    const response = await fetch("/api/letters/add", {
+    const res = await fetch("/api/letters/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,10 +38,12 @@ function ViewLetter() {
         userID : queryParams.get("userID") ? queryParams.get("userID") : "null"
       })
     })
-    .then((res) => res.json())
     .catch((err) => console.error(err))
-    const data = response;
-
+    if (!res) {
+      console.error("Failed to submit letter", res);
+      return;
+    }
+    const data = await res.json();
 
     console.log("data",data); 
     if (data) {
@@ -49,9 +51,11 @@ function ViewLetter() {
     } else {
       alert("Failed to submit letter");
     }
-    if (queryParams.get('userID') != null){
+    console.log("UserID : ",queryParams.get('userID'));
+    
+    if (queryParams.get('userID') && queryParams.get('userID') !== "null" && queryParams.get('userID') !== "undefined") {
       nav(`/dashboard/${queryParams.get('userID')}`);
-    }else{
+    } else {
       nav("/");
     }
   }
