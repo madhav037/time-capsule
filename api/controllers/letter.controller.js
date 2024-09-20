@@ -65,7 +65,7 @@ export const addLetter = async (req, res, next) => {
     if (err.code === "23505") {
       res.status(400).send("ERROR-addLetter: Email already exists");
     } else {
-      res.status(500).send("An error occurred");
+      res.status(500).send("An error occurred",err);
     }
   }
 };
