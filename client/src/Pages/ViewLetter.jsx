@@ -24,7 +24,7 @@ function ViewLetter() {
 
   const handleSubmit = async() => {
     console.log("submitting letter");
-    const response = await fetch("http://localhost:5000/api/letters/add", {
+    const response = await fetch("/api/letters/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ function ViewLetter() {
     } else {
       alert("Failed to submit letter");
     }
-    if (queryParams.get('userID')){
+    if (queryParams.get('userID') != null){
       nav(`/dashboard/${queryParams.get('userID')}`);
     }else{
       nav("/");

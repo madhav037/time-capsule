@@ -9,7 +9,7 @@ export default function Dashboard() {
   const [selectType, setSelectType] = useState([true, false, false]);
 
   const fetchLetters = async () => {
-    const response = await fetch(`http://localhost:5000/api/letters/get-user-letters/${userID}`);
+    const response = await fetch(`/api/letters/get-user-letters/${userID}`);
     const data = await response.json();
     setLetters(data);
   }

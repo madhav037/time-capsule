@@ -6,7 +6,7 @@ import LetterCard from "../Components/LetterCard";
 function PublicLetters() {
   const [letters, setLetters] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/letters/getall")
+    fetch("/api/letters/getall")
       .then((res) => res.json())
       .then((data) => setLetters(data))
       .catch((err) => console.error(err));
