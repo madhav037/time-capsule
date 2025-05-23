@@ -66,8 +66,8 @@ client.on("error", (err) => {
 });
 
 app.get("/ping", (req,res) => {
-      console.log("timecapsule pinged");
-      res.send("timecapsule pinged at " + new Date())
+      console.log("timecapsule pinged", new Date());
+      res.send("timecapsule pinged at ")
 }) 
 (async () => {
   try {
