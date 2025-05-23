@@ -37,8 +37,8 @@ app.use(cors());
 export const client = createClient({
   password: process.env.REDISPASSWORD,
   socket: {
-    host: "redis-17169.c305.ap-south-1-1.ec2.redns.redis-cloud.com",
-    port: 17169,
+    host: process.env.REDISURL,
+    port: process.env.REDISPORT,
   },
 });
 
