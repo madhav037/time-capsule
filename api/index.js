@@ -74,11 +74,6 @@ client.on("error", (err) => {
     const pingResult = await client.ping();
     console.log("Redis Client Ping:", pingResult);
 
-    app.get("/ping", (req, res) => {
-      console.log("timecapsule pinged", new Date());
-      res.send("timecapsule pinged at ");
-    });
-
     app.use("/api/letters", letterHandler);
     app.use("/api/admin", AdminHandler);
     app.use("/api/auth", AuthHandler);

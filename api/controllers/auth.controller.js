@@ -46,3 +46,9 @@ export const logout = async (req, res) => {
     console.log("ERROR-logout", err);
   }
 };
+
+
+export const sendPing = (req, res) => {
+  console.log("timecapsule pinged");
+  res.send("timecapsule pinged");
+}
