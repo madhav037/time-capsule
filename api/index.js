@@ -65,7 +65,10 @@ client.on("error", (err) => {
 
 });
 
-
+app.get("/ping", (req,res) => {
+      console.log("timecapsule pinged");
+      res.send("timecapsule pinged at " + new Date())
+}) 
 (async () => {
   try {
     await client.connect();
@@ -74,11 +77,6 @@ client.on("error", (err) => {
     // Check if the client is ready before running any commands
     const pingResult = await client.ping();
     console.log("Redis Client Ping:", pingResult);
-
-    app.get("/ping", (req,res) => {
-      console.log("timecapsule pinged");
-      res.send("timecapsule pinged at " + new Date())
-    })
 
     app.use("/api/letters", letterHandler);
     app.use("/api/admin", AdminHandler);
