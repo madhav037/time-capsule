@@ -77,7 +77,7 @@ client.on("error", (err) => {
 
     app.get("/ping", (req,res) => {
       console.log("timecapsule pinged");
-      res.send("timecapsule pinged at", new Date())
+      res.send("timecapsule pinged at " + new Date())
     })
 
     app.use("/api/letters", letterHandler);
