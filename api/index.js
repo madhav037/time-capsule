@@ -42,33 +42,29 @@ export const client = createClient({
   },
 });
 
-const __dirname = path.resolve()
+const __dirname = path.resolve();
 
 client.on("error", (err) => {
-  console.log("Redis Client Error", err)
+  console.log("Redis Client Error", err);
   if (err.errno == -3008) {
-    console.log("check internet connection")
+    console.log("check internet connection");
 
-    let timeout = 10, count = 1
+    let timeout = 10,
+      count = 1;
     const interval = setInterval(() => {
       if (count == 10) {
-        console.log(`retrying in ${timeout} secs`)
+        console.log(`retrying in ${timeout} secs`);
         if (timeout == 0) {
-          clearInterval(interval)
+          clearInterval(interval);
         }
-        timeout--
-        count = 1
+        timeout--;
+        count = 1;
       }
-      count++
+      count++;
     }, 100);
   }
-
 });
 
-app.get("/ping", (req,res) => {
-      console.log("timecapsule pinged", new Date());
-      res.send("timecapsule pinged at ")
-}) 
 (async () => {
   try {
     await client.connect();
@@ -78,9 +74,14 @@ app.get("/ping", (req,res) => {
     const pingResult = await client.ping();
     console.log("Redis Client Ping:", pingResult);
 
+    app.get("/ping", (req, res) => {
+      console.log("timecapsule pinged", new Date());
+      res.send("timecapsule pinged at ");
+    });
+
     app.use("/api/letters", letterHandler);
     app.use("/api/admin", AdminHandler);
-    app.use('/api/auth',AuthHandler);
+    app.use("/api/auth", AuthHandler);
 
     app.listen(5000, () => {
       console.log("Server listening on port : 5000");
@@ -91,11 +92,9 @@ app.get("/ping", (req,res) => {
 
   // getLetterThisMonth(8);
   // await sendLetter();
-
 })();
 
 cron.schedule("0 0 1 * *", async () => {
-  
   const currentMonth = new Date().getMonth() + 1;
   const month = client.get("currentCacheMonth");
   if (!month || month != currentMonth) {
@@ -111,12 +110,11 @@ cron.schedule("0 0 1 * *", async () => {
 
 cron.schedule("0 0 * * *", async () => {
   console.log("running cron");
-  
+
   await sendLetter();
 });
-
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
-})
+});
